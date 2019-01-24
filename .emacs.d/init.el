@@ -24,6 +24,10 @@
 ;; Adds a new line to the end of the file
 (setq require-final-newline "visit-save")
 
+;; Mac OS
+(when (eq system-type 'darwin)
+  (setq mac-right-option-modifier 'none))
+
 ;; Melpa
 (require 'package)
 (setq package-enable-at-startup nil)
