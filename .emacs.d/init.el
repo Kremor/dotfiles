@@ -6,6 +6,9 @@
 ;; Display line numbers
 (global-display-line-numbers-mode)
 
+;; Hilights the current line
+(global-hl-line-mode t)
+
 ;; Spaces instead of tabs
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
