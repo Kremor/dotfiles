@@ -68,6 +68,13 @@
   (setq sublimity-map-max-fraction 0.15)
   (setq sublimity-map-text-scale -12))
 
+;; NeoTree
+(use-package neotree
+  :ensure t
+  :config
+  (global-set-key [f8] 'neotree-toggle)
+  (setq neo-theme 'arrow))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
