@@ -1,5 +1,7 @@
 ;; Disables toolbar
 (tool-bar-mode -1)
+;; Disables scroll bar
+(scroll-bar-mode -1)
 
 ;; Display line numbers
 (global-display-line-numbers-mode)
