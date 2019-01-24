@@ -188,5 +188,5 @@ def startup_once():
     import os
     import subprocess
 
-    #script = os.path.expanduser('~/.config/qtile/init.fish')
-    #subprocess.call([script])
+    script = os.path.expanduser('~/.config/qtile/init.fish')
+    subprocess.call([script])
