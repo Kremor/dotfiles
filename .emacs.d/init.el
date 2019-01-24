@@ -19,7 +19,7 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; Adds a new line to the end of the file
-(setq require-final-newline t)
+(setq require-final-newline "visit-save")
 
 ;; Melpa
 (require 'package)
@@ -31,24 +31,6 @@
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("144f05e2dfa7a7b50cad0c3519498ac064cc9da1f194b8ea27d0fb20129d8d7a" default)))
- '(package-selected-packages
-   (quote
-    (company elpy srcery-theme use-package))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 
 ;; Srcery Theme
 (use-package srcery-theme
@@ -67,3 +49,36 @@
   :ensure t
   :config
   (elpy-enable))
+
+;; Sublimity
+(use-package sublimity
+  :ensure t
+  :config
+  ;;(require 'sublimity-scroll)
+  (require 'sublimity-map)
+  (require 'sublimity-attractive)
+  (sublimity-mode 1)
+  ;;(setq sublimity-scroll-weight 5
+  ;;      sublimity-scroll-drift-length 10)
+  (sublimity-attractive-hide-vertical-border)
+  (sublimity-attractive-hide-bars)
+  (sublimity-map-set-delay nil)
+  (setq sublimity-attractive-centering-width nil)
+  (setq sublimity-map-size 12)
+  (setq sublimity-map-max-fraction 0.15)
+  (setq sublimity-map-text-scale -12))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (sublimity use-package srcery-theme elpy company-anaconda))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
