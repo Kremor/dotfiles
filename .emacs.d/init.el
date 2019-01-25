@@ -4,7 +4,10 @@
 (scroll-bar-mode -1)
 
 ;; Display line numbers
-(global-display-line-numbers-mode)
+;;(global-display-line-numbers-mode)
+;; Display whitespaces
+;;(require 'whitespace)
+;;(global-whitespace-mode)
 
 ;; Hilights the current line
 (global-hl-line-mode t)
@@ -13,10 +16,6 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (setq indent-line-function 'insert-tab)
-
-;; Display whitespaces
-(require 'whitespace)
-(global-whitespace-mode)
 
 ;; Delete trailing whitespaces before saving
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -57,6 +56,17 @@
   :config
   (elpy-enable))
 
+;; Magit
+(use-package magit
+  :ensure t)
+
+;; NeoTree
+(use-package neotree
+  :ensure t
+  :config
+  (global-set-key [f8] 'neotree-toggle)
+  (setq neo-theme 'arrow))
+
 ;; Sublimity
 (use-package sublimity
   :ensure t
@@ -75,13 +85,7 @@
   (setq sublimity-map-max-fraction 0.15)
   (setq sublimity-map-text-scale -12))
 
-;; NeoTree
-(use-package neotree
-  :ensure t
-  :config
-  (global-set-key [f8] 'neotree-toggle)
-  (setq neo-theme 'arrow))
-
+;; Spell Check
 (use-package wucuo
   :ensure t
   :config
@@ -93,9 +97,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (sublimity use-package srcery-theme elpy))))
+ '(package-selected-packages (quote (sublimity use-package srcery-theme elpy))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
