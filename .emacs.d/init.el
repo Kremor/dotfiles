@@ -82,6 +82,12 @@
   (global-set-key [f8] 'neotree-toggle)
   (setq neo-theme 'arrow))
 
+(use-package wucuo
+  :ensure t
+  :config
+  (wucuo-start)
+  (setq ispell-extra-args "--run-together"))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
