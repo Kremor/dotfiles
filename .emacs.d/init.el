@@ -27,6 +27,10 @@
 (when (eq system-type 'darwin)
   (setq mac-right-option-modifier 'none))
 
+;; IDO
+(require 'ido)
+(ido-mode t)
+
 ;; Org mode
 (require 'org)
 (define-key global-map "\C-cl" 'org-store-link)
