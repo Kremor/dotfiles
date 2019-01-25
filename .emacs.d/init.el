@@ -51,12 +51,6 @@
   :config
   (load-theme 'srcery t))
 
-;; Company Mode
-(use-package company
-  :ensure t
-  :config
-  (add-hook 'after-init-hook 'global-company-mode))
-
 ;; Elpy
 (use-package elpy
   :ensure t
@@ -101,7 +95,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (sublimity use-package srcery-theme elpy company-anaconda))))
+    (sublimity use-package srcery-theme elpy))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
