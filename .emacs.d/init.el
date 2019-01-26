@@ -58,7 +58,21 @@
 (use-package company
   :ensure t
   :config
-  (add-hook 'after-init-hook 'global-company-mode))
+  (add-hook 'after-init-hook 'global-company-mode)
+  (use-package company-tern
+    :ensure t
+    :config
+    (add-to-list 'company-backends 'company-tern)
+    (add-hook 'rjsx-mode-hook (lambda ()
+                                (tern-mode)
+                                (company-mode)))))
+
+;; Column enforce mode
+(use-package column-enforce-mode
+  :ensure
+  :config
+  (setq column-enforce-column 80)
+  (global-column-enforce-mode))
 
 ;; Elpy
 (use-package elpy
@@ -67,16 +81,17 @@
   (elpy-enable))
 
 ;; JS Mode
-(use-package js2-mode
+(use-package rjsx-mode
   :ensure t
   :config
+  (setq js-indent-level 2)
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
   (use-package indium
     :ensure t)
   (use-package prettier-js
     :ensure t
     :config
-    (add-hook 'js2-mode-hook 'prettier-js-mode))
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
+    (add-hook 'rjsx-mode-hook 'prettier-js-mode)))
 
 ;; Magit
 (use-package magit
@@ -121,7 +136,13 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (prettier-js sublimity use-package srcery-theme elpy))))
+    (rjsx-mode
+     company-tern
+     column-enforce-mode
+     prettier-js sublimity
+     use-package
+     srcery-theme
+     elpy))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
