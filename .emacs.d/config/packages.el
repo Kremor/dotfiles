@@ -78,7 +78,9 @@
 
 ;; Which Key
 (use-package which-key
-  :ensure t)
+  :ensure t
+  :config
+  (which-key-mode))
 
 ;; Spell Check
 (use-package wucuo
