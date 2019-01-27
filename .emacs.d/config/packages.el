@@ -65,10 +65,6 @@
     :config
     (add-hook 'rjsx-mode-hook 'prettier-js-mode)))
 
-;; PDF Tools
-(use-package pdf-tools
-  :ensure t)
-
 ;; Magit
 (use-package magit
   :ensure t)
@@ -79,6 +75,10 @@
   :config
   (global-set-key [f8] 'neotree-toggle)
   (setq neo-theme 'arrow))
+
+;; Which Key
+(use-package which-key
+  :ensure t)
 
 ;; Spell Check
 (use-package wucuo
