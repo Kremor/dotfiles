@@ -59,7 +59,10 @@
 ;; Ivy
 (use-package ivy
   :ensure t
-  :commands (avy-goto-word-1))
+  :commands (avy-goto-word-1)
+  :config
+  (use-package counsel
+    :ensure t))
 
 ;; JS Mode
 (use-package rjsx-mode
