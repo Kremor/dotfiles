@@ -77,6 +77,13 @@
     :config
     (add-hook 'rjsx-mode-hook 'prettier-js-mode)))
 
+;; Key frequency
+(use-package keyfreq
+  :ensure t
+  :config
+  (keyfreq-mode 1)
+  (keyfreq-autosave-mode 1))
+
 ;; Magit
 (use-package magit
   :ensure t)
