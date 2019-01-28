@@ -9,6 +9,9 @@
 ;; Hilights the current line
 (global-hl-line-mode t)
 
+;; Matching parens
+(show-paren-mode t)
+
 ;; Spaces instead of tabs
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
