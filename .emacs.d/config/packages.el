@@ -52,6 +52,15 @@
   :config
   (elpy-enable))
 
+;; general.el
+(use-package general
+  :ensure t)
+
+;; Ivy
+(use-package ivy
+  :ensure t
+  :commands (avy-goto-word-1))
+
 ;; JS Mode
 (use-package rjsx-mode
   :ensure t

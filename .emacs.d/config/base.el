@@ -12,6 +12,10 @@
 ;; Matching parens
 (show-paren-mode t)
 
+;; use utf-8 by default
+(setq coding-system-for-read 'utf-8)
+(setq coding-system-for-write 'utf-8)
+
 ;; Spaces instead of tabs
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)

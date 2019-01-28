@@ -22,16 +22,30 @@
 ;; Key bindings
 ;; =============================================================================
 
-;; Start and end of buffer
-(global-unset-key (kbd "M-<"))
-(global-unset-key (kbd "M->"))
-(global-set-key (kbd "C-,") 'beginning-of-buffer)
-(global-set-key (kbd "C-.") 'end-of-buffer)
+;; Ivy key bindings
+(general-define-key
+ "C-s" 'swiper
+ "M-x" 'counsel-M-x)
 
-;; Custom functions
+(general-define-key
+ :prefix "C-c"
+ "b" 'ivy-switch-buffer
+ "/" 'counsel-git-grep
+ "f" '(:ignore t: :which-key "files")
+ "ff" 'counsel-find-file
+ "fr" 'counsel-recentf
+ "p" '(:ignore t :which-key "project")
+ "pf" '(counsel-git :which-key "find file in git dir"))
 
-(global-set-key (kbd "M-<up>") 'my-move-line-up)
-(global-set-key (kbd "M-<down>") 'my-move-line-down)
+;; Replace go to start and end of buffer
+(general-define-key
+ "C-," 'beginning-of-buffer
+ "C-." 'end-of-buffer)
+
+;; Key bindings for custom functions
+(general-define-key
+ "M-<down>" 'my-move-line-down
+ "M-<up>" 'my-move-line-up)
 
 ;; =============================================================================
 ;; Auto generated code
@@ -44,7 +58,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (which-key wucuo use-package sublimity srcery-theme rjsx-mode prettier-js neotree magit indium elpy company-tern company-anaconda column-enforce-mode))))
+    (counsel avy general which-key wucuo use-package sublimity srcery-theme rjsx-mode prettier-js neotree magit indium elpy company-tern company-anaconda column-enforce-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
