@@ -62,7 +62,9 @@
   :commands (avy-goto-word-1)
   :config
   (use-package counsel
-    :ensure t))
+    :ensure t
+    :config
+    (counsel-mode)))
 
 ;; JS Mode
 (use-package rjsx-mode

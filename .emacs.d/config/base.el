@@ -12,6 +12,12 @@
 ;; Matching parens
 (show-paren-mode t)
 
+;; Hide vertical borders
+(set-face-foreground 'vertical-border (face-background 'default))
+
+;; Disables scroll bar
+(scroll-bar-mode -1)
+
 ;; use utf-8 by default
 (setq coding-system-for-read 'utf-8)
 (setq coding-system-for-write 'utf-8)
