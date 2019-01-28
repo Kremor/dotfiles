@@ -1,0 +1,19 @@
+* How to clone this repository
+
+1. Create a bare git repository:
+   #+BEGIN_SRC bash
+   $> git init --bare $HOME/.dotfiles
+   #+END_SRC
+2. Add an alias for git:
+   #+BEGIN_SRC bash
+   $> alias dot="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+   #+END_SRC
+3. Clone the repository:
+   #+BEGIN_SRC bash
+   $> dot clone git@host.xyz:repository
+   #+END_SRC
+4. Configure the repository to ignore untracked files:
+   #+BEGIN_SRC bash
+   $> dot config --local status.showUntrackedFiles no
+   #+END_SRC
+5. You can now use the repository as normal, just use ~dot~ instead of ~git~.
