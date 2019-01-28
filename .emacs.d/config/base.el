@@ -23,6 +23,13 @@
 ;; Adds a new line to the end of the file
 (setq require-final-newline "visit-save")
 
+;; Sets a custom directory to save tmp files instead of saving them in the
+;; current directory.
+(setq backup-directory-alist
+      `(("." . ,(concat user-emacs-directory "tmp"))))
+;; Disable backup files
+(setq make-backup-files nil)
+
 ;; Mac OS
 (when (eq system-type 'darwin)
   (setq mac-right-option-modifier 'none))
