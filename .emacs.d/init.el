@@ -8,7 +8,7 @@
 (load "~/.emacs.d/config/packages.el")
 
 ;; =============================================================================
-;; Miscellaneus configurations that can't be in base.el for various reasons.
+;; Settings that can not be part of base.el for various reasons.
 ;; E.g. Needs to be loaded after packages.el
 ;; =============================================================================
 
@@ -17,8 +17,24 @@
 ;; Disables scroll bar
 (scroll-bar-mode -1)
 
+
 ;; =============================================================================
-;; Automatic generated code
+;; Key bindings
+;; =============================================================================
+
+;; Start and end of buffer
+(global-unset-key (kbd "M-<"))
+(global-unset-key (kbd "M->"))
+(global-set-key (kbd "C-,") 'beginning-of-buffer)
+(global-set-key (kbd "C-.") 'end-of-buffer)
+
+;; Custom functions
+
+(global-set-key (kbd "M-<up>") 'my-move-line-up)
+(global-set-key (kbd "M-<down>") 'my-move-line-down)
+
+;; =============================================================================
+;; Auto generated code
 ;; =============================================================================
 
 (custom-set-variables

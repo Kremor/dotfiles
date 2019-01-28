@@ -18,6 +18,3 @@
       (transpose-lines 1))
     (forward-line)
     (move-to-column col)))
-
-(global-set-key (kbd "M-<up>") 'my-move-line-up)
-(global-set-key (kbd "M-<down>") 'my-move-line-down)
