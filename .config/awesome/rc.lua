@@ -441,7 +441,7 @@ clientkeys = gears.table.join(
 -- This should map on the top row of your keyboard, usually 1 to 9.
 for i = 1, 10 do
    local index = i
-   local screen = i // 6 + 1
+   local screen_index = i // 6 + 1
    if index > 5 then
       index = index - 5
    end
@@ -450,7 +450,7 @@ for i = 1, 10 do
       -- View tag only.
       awful.key({ modkey }, "#" .. i + 9,
          function ()
-            awful.screen.focus(screen)
+            awful.screen.focus(screen_index)
             local screen = awful.screen.focused()
             local tag = screen.tags[index]
             if tag then
@@ -463,9 +463,11 @@ for i = 1, 10 do
       awful.key({ modkey, "Shift" }, "#" .. i + 9,
          function ()
             if client.focus then
-               local tag = client.focus.screen.tags[index]
-               if tag then
-                  client.focus:move_to_tag(tag)
+               for s in screen do
+                  if s.index == screen_index then
+                     local tag = s.tags[index]
+                     client.focus:move_to_tag(tag)
+                  end
                end
             end
          end,
