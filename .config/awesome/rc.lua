@@ -201,6 +201,12 @@ awful.screen.connect_for_each_screen(function(s)
        awful.layout.layouts[1]
     )
 
+    for i = 1, 5 do
+       local tag = s.tags[i]
+       tag.gap = 3
+       tag.gap_single_client = true
+    end
+
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
     -- Create an imagebox widget which will contain an icon indicating which
@@ -516,8 +522,8 @@ root.keys(globalkeys)
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
-      properties = { border_width = beautiful.border_width,
-                     border_color = beautiful.border_normal,
+      properties = { border_width = 2,
+                     border_color = "#8ABDF2",
                      focus = awful.client.focus.filter,
                      raise = true,
                      keys = clientkeys,
@@ -555,7 +561,7 @@ awful.rules.rules = {
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = true }
+      }, properties = { titlebars_enabled = false }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
@@ -566,18 +572,25 @@ awful.rules.rules = {
 
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
-client.connect_signal("manage", function (c)
-    -- Set the windows at the slave,
-    -- i.e. put it at the end of others instead of setting it master.
-    -- if not awesome.startup then awful.client.setslave(c) end
+client.connect_signal(
+   "manage",
+   function (c)
+      -- Set the windows at the slave,
+      -- i.e. put it at the end of others instead of setting it master.
+      -- if not awesome.startup then awful.client.setslave(c) end
 
-    if awesome.startup and
-      not c.size_hints.user_position
+      c.shape = function(cr, w, h)
+         gears.shape.rounded_rect(cr, w, h, 10)
+      end
+
+      if awesome.startup and
+         not c.size_hints.user_position
       and not c.size_hints.program_position then
-        -- Prevent clients from being unreachable after screen count changes.
-        awful.placement.no_offscreen(c)
-    end
-end)
+         -- Prevent clients from being unreachable after screen count changes.
+         awful.placement.no_offscreen(c)
+      end
+   end
+)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", function(c)
@@ -629,6 +642,18 @@ client.connect_signal("mouse::enter", function(c)
     end
 end)
 
-client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+client.connect_signal(
+   "focus",
+   function(c)
+      c.border_color = "#ad6b7b"
+      c.border_width = 4
+   end
+)
+client.connect_signal(
+   "unfocus",
+   function(c)
+      c.border_color = "#21181c"
+      c.border_width = 4
+   end
+)
 -- }}}
