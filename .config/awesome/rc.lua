@@ -14,6 +14,20 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+
+local function setTitlebar(c, f)
+   if f then
+      if c.titlebar == nil then
+         c:emit_signal("request::titlebars", "rules", {})
+      end
+      awful.titlebar.show(c)
+   else
+      awful.titlebar.hide(c)
+   end
+end
+
+
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -57,22 +71,22 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.tile,
-    awful.layout.suit.fair,
-    awful.layout.suit.max,
-    awful.layout.suit.magnifier,
-    awful.layout.suit.floating,
+   awful.layout.suit.spiral.dwindle,
+   awful.layout.suit.tile,
+   awful.layout.suit.fair,
+   awful.layout.suit.max,
+   awful.layout.suit.magnifier,
+   awful.layout.suit.floating,
+   -- awful.layout.suit.max.fullscreen,
    -- awful.layout.suit.spiral,
-    -- awful.layout.suit.tile.left,
-    -- awful.layout.suit.tile.bottom,
-    -- awful.layout.suit.tile.top,
-    -- awful.layout.suit.fair.horizontal,
-    -- awful.layout.suit.max.fullscreen,
-    -- awful.layout.suit.corner.nw,
-    -- awful.layout.suit.corner.ne,
-    -- awful.layout.suit.corner.sw,
-    -- awful.layout.suit.corner.se,
+   -- awful.layout.suit.tile.left,
+   -- awful.layout.suit.tile.bottom,
+   -- awful.layout.suit.tile.top,
+   -- awful.layout.suit.fair.horizontal,
+   -- awful.layout.suit.corner.nw,
+   -- awful.layout.suit.corner.ne,
+   -- awful.layout.suit.corner.sw,
+   -- awful.layout.suit.corner.se,
 }
 -- }}}
 
@@ -126,46 +140,46 @@ mytextclock = wibox.widget.textclock()
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
-                    awful.button({ }, 1, function(t) t:view_only() end),
-                    awful.button({ modkey }, 1, function(t)
-                                              if client.focus then
-                                                  client.focus:move_to_tag(t)
-                                              end
-                                          end),
-                    awful.button({ }, 3, awful.tag.viewtoggle),
-                    awful.button({ modkey }, 3, function(t)
-                                              if client.focus then
-                                                  client.focus:toggle_tag(t)
-                                              end
-                                          end),
-                    awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
-                    awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
-                )
+   awful.button({ }, 1, function(t) t:view_only() end),
+   awful.button({ modkey }, 1, function(t)
+         if client.focus then
+            client.focus:move_to_tag(t)
+         end
+   end),
+   awful.button({ }, 3, awful.tag.viewtoggle),
+   awful.button({ modkey }, 3, function(t)
+         if client.focus then
+            client.focus:toggle_tag(t)
+         end
+   end),
+   awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
+   awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
+)
 
 local tasklist_buttons = gears.table.join(
-                     awful.button({ }, 1, function (c)
-                                              if c == client.focus then
-                                                  c.minimized = true
-                                              else
-                                                  -- Without this, the following
-                                                  -- :isvisible() makes no sense
-                                                  c.minimized = false
-                                                  if not c:isvisible() and c.first_tag then
-                                                      c.first_tag:view_only()
-                                                  end
-                                                  -- This will also un-minimize
-                                                  -- the client, if needed
-                                                  client.focus = c
-                                                  c:raise()
-                                              end
-                                          end),
-                     awful.button({ }, 3, client_menu_toggle_fn()),
-                     awful.button({ }, 4, function ()
-                                              awful.client.focus.byidx(1)
-                                          end),
-                     awful.button({ }, 5, function ()
-                                              awful.client.focus.byidx(-1)
-                                          end))
+   awful.button({ }, 1, function (c)
+         if c == client.focus then
+            c.minimized = true
+         else
+            -- Without this, the following
+            -- :isvisible() makes no sense
+            c.minimized = false
+            if not c:isvisible() and c.first_tag then
+               c.first_tag:view_only()
+            end
+            -- This will also un-minimize
+            -- the client, if needed
+            client.focus = c
+            c:raise()
+         end
+   end),
+   awful.button({ }, 3, client_menu_toggle_fn()),
+   awful.button({ }, 4, function ()
+         awful.client.focus.byidx(1)
+   end),
+   awful.button({ }, 5, function ()
+         awful.client.focus.byidx(-1)
+end))
 
 local function set_wallpaper(s)
     -- Wallpaper
@@ -348,16 +362,18 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1, nil, true)    end,
               {description = "increase the number of columns", group = "layout"}),
     awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1, nil, true)    end,
-              {description = "decrease the number of columns", group = "layout"}),
+       {description = "decrease the number of columns", group = "layout"}
+    ),
     awful.key(
-       { modkey, "Shift" },
-       "space",
+       { modkey, }, ",",
+       function () awful.layout.inc(-1) end,
+       { description = "select previous", group = "layout" }
+    ),
+    awful.key(
+       { modkey, }, ".",
        function () awful.layout.inc(1) end,
        {description = "select next", group = "layout"}
     ),
-    -- awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
-    --           {description = "select previous", group = "layout"}),
-
     awful.key({ modkey, "Control" }, "n",
               function ()
                   local c = awful.client.restore()
@@ -389,27 +405,41 @@ globalkeys = gears.table.join(
 )
 
 clientkeys = gears.table.join(
-    awful.key({ modkey,           }, "f",
-        function (c)
-            c.fullscreen = not c.fullscreen
-            c:raise()
-        end,
-        {description = "toggle fullscreen", group = "client"}),
-    awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end,
-              {description = "close", group = "client"}),
-    awful.key(
-       { modkey, "Shift"  },
-       "f",
-       awful.client.floating.toggle,
-       {description = "toggle floating", group = "client"}
-    ),
-    awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
-              {description = "move to master", group = "client"}),
-    awful.key({ modkey,           }, "o",      function (c) c:move_to_screen()               end,
-              {description = "move to screen", group = "client"}),
-    awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
-              {description = "toggle keep on top", group = "client"}),
-    awful.key({ modkey,           }, "n",
+   awful.key(
+      { modkey, }, "f",
+      function (c)
+         c.fullscreen = not c.fullscreen
+         c:raise()
+      end,
+      {description = "toggle fullscreen", group = "client"}
+   ),
+   awful.key(
+      { modkey, }, "q",
+      function (c) c:kill() end,
+      {description = "close", group = "client"}
+   ),
+   awful.key(
+      { modkey, "Shift"  }, "f",
+      function (c)
+         c.floating = not c.floating
+      end,
+      {description = "toggle floating", group = "client"}
+   ),
+   awful.key(
+      { modkey, "Control" }, "Return",
+      function (c) c:swap(awful.client.getmaster()) end,
+      {description = "move to master", group = "client"}
+   ),
+   awful.key(
+      { modkey, }, "o",
+      function (c) c:move_to_screen() end,
+      {description = "move to screen", group = "client"}
+   ),
+   awful.key(
+      { modkey,           }, "t",
+      function (c) c.ontop = not c.ontop end,
+      {description = "toggle keep on top", group = "client"}),
+    awful.key({ modkey, }, "n",
         function (c)
             -- The client currently has the input focus, so it cannot be
             -- minimized, since minimized clients can't have the focus.
@@ -573,17 +603,52 @@ awful.rules.rules = {
 -- }}}
 
 -- {{{ Signals
+tag.connect_signal(
+   "property::useless_gap*",
+   function (t)
+      t.gap_single_client = true
+      count = 0
+      for _ in pairs(t:clients()) do
+         count = count + 1
+      end
+      if count == 1 then
+         t.gap = 10
+      else
+         t.gap = 3
+      end
+   end
+)
+
+-- Adds a title bar to all the clients if the layout is changed to floating
+
+-- Changes floating property
+client.connect_signal(
+   "property::floating",
+   function (c)
+      setTitlebar(c, c.floating)
+   end
+)
+
 -- Signal function to execute when a new client appears.
 client.connect_signal(
    "manage",
    function (c)
       -- Set the windows at the slave,
       -- i.e. put it at the end of others instead of setting it master.
-      -- if not awesome.startup then awful.client.setslave(c) end
 
+      -- Adds titlebar if window is in floating mode
+      setTitlebar(
+         c,
+         c.floating or c.first_tag.layout == awful.layout.suit.floating
+      )
+
+      -- Adds round corners
       c.shape = function(cr, w, h)
          gears.shape.rounded_rect(cr, w, h, 10)
       end
+
+      -- Sets new window as slave
+      awful.client.setslave(c)
 
       if awesome.startup and
          not c.size_hints.user_position
