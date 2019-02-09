@@ -1,21 +1,37 @@
 #! /bin/fish
 
-set compton (pidof compton)
+function run
+    # Checks if a program is already running on the background.
+    # If not executes it with the included parameters.
+    set pid (pidof $argv[1])
 
-if not test "$compton" = ""
-    echo $compton
-else
-    compton --vsync opengl & disown
-    echo "compton started"
+    if test "$pid" = ""
+        $argv &
+    else
+        echo $argv[1] is already running
+    end
 end
 
-set redshift (pidof redshift)
-if not test "$redshift" = ""
-    echo $redshift
-else
-    redshift & disown
-    echo "redshift started"
-end
+# compton
+run compton --vsync opengl
+
+# redshift
+run redshift
+
+# Network manager
+run nm-applet
+
+# Thunar
+run thunar --daemon
+
+# Pamac
+run pamac-tray
+
+# XFCE Settings Daemon
+run xfsettingsd
 
 numlockx on
-feh --randomize --bg-tile $HOME/Downloads/blue.png
+feh --randomize --bg-tile $HOME/.background.png
+
+# Changes key configuration
+xmodmap $HOME/.config/xmodmap/xmodmap.conf
