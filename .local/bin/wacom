@@ -1,0 +1,17 @@
+#! /bin/fish
+
+# When a wacom device is connected, maps that device to the
+# second monitor and rotates the device.
+
+set device (string match -r '\d{1,2}' (xsetwacom list devices | grep stylus))
+
+if test "$device" = ""
+    set defice (string match -r '\d{1,2}' (xinput list | grep stylus))
+end
+
+if not test "$device" = ""
+    xsetwacom set $device MapToOutput 1366x768+1366+0
+    xsetwacom set $device Rotate half
+else
+    echo "Error - No wacom device connected."
+end
