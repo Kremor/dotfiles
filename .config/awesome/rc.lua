@@ -15,6 +15,19 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 require("awful.hotkeys_popup.keys")
 
 
+local function double_screen_setup()
+end
+
+
+local function num_screens()
+   local res = 0
+   for s in screen do
+      res = res  +1
+   end
+   return res
+end
+
+
 local function setTitlebar(c, f)
    if f then
       if c.titlebar == nil then
@@ -24,6 +37,10 @@ local function setTitlebar(c, f)
    else
       awful.titlebar.hide(c)
    end
+end
+
+
+local function single_screen_setup()
 end
 
 
@@ -55,7 +72,37 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.init(
+   gears.filesystem.get_themes_dir().."default/theme.lua"
+)
+
+local icons_path = os.getenv("HOME").."/.config/awesome/icons/"
+
+-- Overrides default theme
+beautiful.bg_normal = "#ffe2e2"
+beautiful.bg_focus = "#ffbcbc6"
+beautiful.bg_systray = "#ffe2e2"
+beautiful.bg_urgent = "#ff697b"
+
+beautiful.fg_normal = "#8785a2"
+beautiful.fg_focus = "#8785a2"
+
+beautiful.useless_gap = 3
+beautiful.border_width = 2
+
+beautiful.titlebar_bg = beautiful.bg_normal
+beautiful.titlebar_fg_normal = beautiful.fg_normal
+beautiful.titlebar_fg_focus = beautiful.fg_normal
+
+beautiful.awesome_icon = icons_path.."icons8-moon-phase-64.png"
+
+beautiful.titlebar_close_button_normal = icons_path.."close-icon-normal.svg"
+beautiful.titlebar_close_button_focus = icons_path.."close-icon-focus.svg"
+
+-- Hover
+beautiful.titlebar_close_button_normal_hover = icons_path.."close-icon.svg"
+beautiful.titlebar_close_button_focus_hover = icons_path.."close-icon.svg"
+
 
 -- This is used later as the default terminal and editor to run.
 terminal = "sakura"
@@ -291,33 +338,85 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
 
-    awful.key({ modkey,           }, "j",
+    awful.key(
+       { modkey, }, "j",
         function ()
             awful.client.focus.byidx( 1)
         end,
-        {description = "focus next by index", group = "client"}
+        {
+           description = "focus next by index",
+           group = "client"
+        }
     ),
-    awful.key({ modkey,           }, "k",
+    awful.key(
+       { modkey, }, "k",
         function ()
             awful.client.focus.byidx(-1)
         end,
-        {description = "focus previous by index", group = "client"}
+        {
+           description = "focus previous by index",
+           group = "client"
+        }
     ),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
-              {description = "show main menu", group = "awesome"}),
+    awful.key(
+       { modkey, }, "w",
+       function () mymainmenu:show() end,
+       {
+          description = "show main menu",
+          group = "awesome"
+       }
+    ),
+
+    -- Centers floating window
+    awful.key(
+       { modkey, }, "c",
+       function(c)
+          awful.placement.centered(c, {honor_workarea=true})
+       end,
+       {
+          description = "Centers floating window",
+          group = "client"
+       }
+    ),
 
     -- Layout manipulation
-    awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
-              {description = "swap with next client by index", group = "client"}),
-    awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
-              {description = "swap with previous client by index", group = "client"}),
-    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end,
-              {description = "focus the next screen", group = "screen"}),
-    awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end,
-              {description = "focus the previous screen", group = "screen"}),
-    awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
-              {description = "jump to urgent client", group = "client"}),
-    awful.key({ modkey,           }, "Tab",
+    awful.key(
+       { modkey, "Shift" }, "j",
+       function () awful.client.swap.byidx(1) end,
+       {
+          description = "swap with next client by index",
+          group = "client"}
+    ),
+    awful.key(
+       { modkey, "Shift" }, "k",
+       function () awful.client.swap.byidx(-1) end,
+       {
+          description = "swap with previous client by index",
+          group = "client"}
+    ),
+    awful.key(
+       { modkey, "Control" }, "j",
+       function () awful.screen.focus_relative( 1) end,
+       {
+          description = "focus the next screen",
+          group = "screen"}
+    ),
+    awful.key(
+       { modkey, "Control" }, "k",
+       function () awful.screen.focus_relative(-1) end,
+       {
+          description = "focus the previous screen",
+          group = "screen"}
+    ),
+    awful.key(
+       { modkey, }, "u",
+       awful.client.urgent.jumpto,
+       {
+          description = "jump to urgent client",
+          group = "client"}
+    ),
+    awful.key(
+       { modkey, }, "Tab",
         function ()
             awful.client.focus.history.previous()
             if client.focus then
@@ -644,7 +743,7 @@ client.connect_signal(
 
       -- Adds round corners
       c.shape = function(cr, w, h)
-         gears.shape.rounded_rect(cr, w, h, 10)
+         gears.shape.rounded_rect(cr, w, h, 6)
       end
 
       -- Sets new window as slave
@@ -690,10 +789,10 @@ client.connect_signal("request::titlebars", function(c)
             layout  = wibox.layout.flex.horizontal
         },
         { -- Right
-            awful.titlebar.widget.floatingbutton (c),
-            awful.titlebar.widget.maximizedbutton(c),
-            awful.titlebar.widget.stickybutton   (c),
-            awful.titlebar.widget.ontopbutton    (c),
+            -- awful.titlebar.widget.floatingbutton (c),
+            -- awful.titlebar.widget.maximizedbutton(c),
+            -- awful.titlebar.widget.stickybutton   (c),
+            -- awful.titlebar.widget.ontopbutton    (c),
             awful.titlebar.widget.closebutton    (c),
             layout = wibox.layout.fixed.horizontal()
         },
@@ -712,15 +811,16 @@ end)
 client.connect_signal(
    "focus",
    function(c)
-      c.border_color = "#ad6b7b"
-      c.border_width = 4
+      c.border_color = beautiful.bg_normal
    end
 )
+
 client.connect_signal(
    "unfocus",
    function(c)
       c.border_color = "#21181c"
-      c.border_width = 4
    end
 )
 -- }}}
+
+awful.spawn.with_shell("$HOME/.local/bin/init.fish")
