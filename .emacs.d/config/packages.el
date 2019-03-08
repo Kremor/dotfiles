@@ -34,6 +34,7 @@
   (use-package company-tern
     :ensure t
     :config
+    (setq company-idle-delay 0.2)
     (add-to-list 'company-backends 'company-tern)
     (add-hook 'rjsx-mode-hook (lambda ()
                                 (tern-mode)
@@ -77,7 +78,26 @@
   (use-package prettier-js
     :ensure t
     :config
-    (add-hook 'rjsx-mode-hook 'prettier-js-mode)))
+    (add-hook 'rjsx-mode-hook 'prettier-js-mode))
+  (use-package flycheck
+    :ensure t
+    :config
+    (flycheck-add-mode 'javascript-eslint 'rjsx-mode)
+    (setq-default flycheck-disabled-checkers
+                  (append flycheck-disabled-checkers
+                          '(javascript-jshint)))
+    (setq-default flycheck-temp-prefix ".flycheck")
+    (defun my/use-eslint-from-node-modules ()
+      (let* ((root (locate-dominating-file
+                    (or (buffer-file-name) default-directory)
+                    "node_modules"))
+             (eslint (and root
+                          (expand-file-name "node_modules/eslint/bin/eslint.js"
+                                            root))))
+        (when (and eslint (file-executable-p eslint))
+          (setq-local flycheck-javascript-eslint-executable eslint))))
+    (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules))
+  )
 
 ;; Key frequency
 (use-package keyfreq
@@ -96,6 +116,15 @@
   :config
   (global-set-key [f8] 'neotree-toggle)
   (setq neo-theme 'arrow))
+
+(use-package projectile
+  :ensure t)
+
+;; Super save
+(use-package super-save
+  :ensure t
+  :config
+  (super-save-mode +1))
 
 ;; Which Key
 (use-package which-key

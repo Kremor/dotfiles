@@ -61,6 +61,14 @@
  "fr" '(counsel-recentf :which-key "find recent")
  "fs" '(save-buffer :which-key "save")
 
+ ;; Major modes
+ ;; "m" '(:ignore t :which-key "major mode")
+
+ ;; Projectile
+ ;; "p" (:ignore t :which-key "projectile")
+ ;; "pd" (projectile-find-dir :which-key "find dir")
+ ;; "pf" (projectile-find-file :which-key "find file")
+
  ;; version control
  "v" '(:ignore t :which-key "git")
  "vb" '(:ignore t :which-key "branch")
