@@ -65,9 +65,11 @@
  ;; "m" '(:ignore t :which-key "major mode")
 
  ;; Projectile
- ;; "p" (:ignore t :which-key "projectile")
- ;; "pd" (projectile-find-dir :which-key "find dir")
- ;; "pf" (projectile-find-file :which-key "find file")
+ "p" '(:ignore t :which-key "projectile")
+ "pd" '(projectile-find-dir :which-key "find dir")
+ "pf" '(projectile-find-file :which-key "find file")
+ "po" '(projectile-switch-project :which-key "open project")
+ "pp" '(projectile-discover-projects-in-directory :which-key "discover projects")
 
  ;; version control
  "v" '(:ignore t :which-key "git")

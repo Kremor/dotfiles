@@ -26,32 +26,12 @@
   :config
   (load-theme 'srcery t))
 
-;; Company
-(use-package company
-  :ensure t
-  :config
-  (add-hook 'after-init-hook 'global-company-mode)
-  (use-package company-tern
-    :ensure t
-    :config
-    (setq company-idle-delay 0.2)
-    (add-to-list 'company-backends 'company-tern)
-    (add-hook 'rjsx-mode-hook (lambda ()
-                                (tern-mode)
-                                (company-mode)))))
-
 ;; Column enforce mode
 (use-package column-enforce-mode
   :ensure
   :config
   (setq column-enforce-column 80)
   (global-column-enforce-mode))
-
-;; Elpy
-(use-package elpy
-  :ensure t
-  :config
-  (elpy-enable))
 
 ;; general.el
 (use-package general
@@ -67,38 +47,6 @@
     :config
     (counsel-mode)))
 
-;; JS Mode
-(use-package rjsx-mode
-  :ensure t
-  :config
-  (setq js-indent-level 2)
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
-  (use-package indium
-    :ensure t)
-  (use-package prettier-js
-    :ensure t
-    :config
-    (add-hook 'rjsx-mode-hook 'prettier-js-mode))
-  (use-package flycheck
-    :ensure t
-    :config
-    (flycheck-add-mode 'javascript-eslint 'rjsx-mode)
-    (setq-default flycheck-disabled-checkers
-                  (append flycheck-disabled-checkers
-                          '(javascript-jshint)))
-    (setq-default flycheck-temp-prefix ".flycheck")
-    (defun my/use-eslint-from-node-modules ()
-      (let* ((root (locate-dominating-file
-                    (or (buffer-file-name) default-directory)
-                    "node_modules"))
-             (eslint (and root
-                          (expand-file-name "node_modules/eslint/bin/eslint.js"
-                                            root))))
-        (when (and eslint (file-executable-p eslint))
-          (setq-local flycheck-javascript-eslint-executable eslint))))
-    (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules))
-  )
-
 ;; Key frequency
 (use-package keyfreq
   :ensure t
@@ -108,16 +56,6 @@
 
 ;; Magit
 (use-package magit
-  :ensure t)
-
-;; NeoTree
-(use-package neotree
-  :ensure t
-  :config
-  (global-set-key [f8] 'neotree-toggle)
-  (setq neo-theme 'arrow))
-
-(use-package projectile
   :ensure t)
 
 ;; Super save
@@ -130,7 +68,9 @@
 (use-package which-key
   :ensure t
   :config
-  (which-key-mode))
+  (which-key-mode)
+  (setq which-key-idle-delay 0.1)
+  )
 
 ;; Spell Check
 (use-package wucuo

@@ -1,0 +1,6 @@
+[submodule ".emacs.d/org-wiki"]
+	path = .emacs.d/org-wiki
+	url = https://github.com/caiorss/org-wiki
+[submodule ".emacs.d/config/packages/lsp-python-ms"]
+	path = .emacs.d/config/packages/lsp-python-ms
+	url = https://github.com/andrew-christianson/lsp-python-ms
