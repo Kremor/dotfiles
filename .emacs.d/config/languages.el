@@ -50,6 +50,7 @@
 
 ;; Python
 ;; python-language-server must be installed
+;; $> pacman -S python-language-server
 (load "~/.emacs.d/config/packages/lsp-python-ms/lsp-python-ms.el")
 (use-package lsp-python-ms
   :after lsp-python-ms
