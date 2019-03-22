@@ -24,7 +24,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (rust-mode vue-mode lsp-vue company-lsp lsp-ui lsp-javascript-flow markdown-mode projectile fish-mode lua-mode super-save flycheck keyfreq counsel avy general which-key wucuo use-package sublimity srcery-theme prettier-js magit column-enforce-mode))))
+    (company-auctex auctex evil rust-mode vue-mode lsp-vue company-lsp lsp-ui lsp-javascript-flow markdown-mode projectile fish-mode lua-mode super-save flycheck keyfreq counsel avy general which-key wucuo use-package sublimity srcery-theme prettier-js magit column-enforce-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

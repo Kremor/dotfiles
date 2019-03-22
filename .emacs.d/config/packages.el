@@ -33,6 +33,14 @@
   (setq column-enforce-column 80)
   (global-column-enforce-mode))
 
+;; Evil
+(use-package evil
+  :ensure t
+  :config
+  (evil-mode t)
+  (evil-ex-define-cmd "q" 'kill-this-buffer)
+  )
+
 ;; general.el
 (use-package general
   :ensure t)

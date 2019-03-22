@@ -69,7 +69,10 @@
  "pd" '(projectile-find-dir :which-key "find dir")
  "pf" '(projectile-find-file :which-key "find file")
  "po" '(projectile-switch-project :which-key "open project")
- "pp" '(projectile-discover-projects-in-directory :which-key "discover projects")
+ "pP" '(
+        projectile-discover-projects-in-directory
+        :which-key "discover projects"
+        )
 
  ;; version control
  "v" '(:ignore t :which-key "git")
@@ -78,20 +81,20 @@
  "vbc" '(magit-branch-and-checkout :which "create anc checkout")
  "vc" '(magit-checkout :which-key "checkout")
  "vf" '(magit-fetch-from-upstream :which-key "fetch branch")
- "vg" '(magit :which-key "magit")
  "vp" '(magit-push-current-to-upstream :which-key "push upstream")
  "vq" '(magit-pull-from-upstream :which-key "pull upstream")
+ "vv" '(magit :which-key "magit")
 
  ;; windows
  "w" '(:ignore t :which-key "windows")
  "wd" '(delete-window :which-key "delete window")
+ "wD" '(delete-other-windows :which-key "delete others")
  "wf" '(:ignore t :which-key "frames")
  "wfd" '(delete-frame :which-key "delete frame")
  "wff" '(make-frame :which-key "make frame")
  "wfj" '(delete-other-window :which-key "delete others")
  "wfo" '(other-frame :which-key "other frame")
  "wh" '(split-window-below :which-key "split horizontally")
- "wj" '(delete-other-windows :which-key "delete others")
  "wo" '(other-window :which-key "other window")
  "wv" '(split-window-right :which-key "split vertically")
 
