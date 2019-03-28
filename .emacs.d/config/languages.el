@@ -72,14 +72,6 @@
 (use-package auctex
   :defer t
   :hook (LaTeX-mode . flymake)
-;; Python
-;; python-language-server must be installed
-;; $> pacman -S python-language-server
-(load "~/.emacs.d/config/packages/lsp-python-ms/lsp-python-ms.el")
-(use-package lsp-python-ms
-  :after lsp-python-ms
-  :ensure nil
-  :hook (python-mode . lsp)
   :config
 
   ;; Enables parsing
@@ -98,15 +90,6 @@
 
 ;; Python
 ;; python-language-server must be installed
-;; (load "~/.emacs.d/config/packages/lsp-python-ms/lsp-python-ms.el")
-;; (use-package ls-python-ms
-;;   :ensure nil
-;;   :hook (python-mode . lsp)
-;;   :config
-;;   (setq lsp-python-ms-executable
-;;         "/usr/bin/pyls"
-;;         )
-;;   )
 (add-hook 'python-mode-hook #'lsp)
 (setq python-indent-offset 4)
 

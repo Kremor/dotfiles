@@ -72,6 +72,14 @@
   :config
   (super-save-mode +1))
 
+;; Wakatime
+(use-package wakatime-mode
+  :ensure t
+  :config
+  (global-wakatime-mode t)
+  (setq wakatime-cli-path "/home/kremor/.local/bin/wakatime")
+  )
+
 ;; Which Key
 (use-package which-key
   :ensure t

@@ -21,6 +21,10 @@
   (setq lsp-ui-doc-enable t)
   )
 
+(use-package prettier-js
+  :defer t
+  )
+
 (use-package projectile
   :ensure t
   :config
@@ -37,16 +41,24 @@
 ;; vscode-css-languageserver-bin required
 ;; $> npm install -g vscode-css-languageserver-bin
 (add-hook 'css-mode #'lsp)
+(setq css-indent-offset 2)
+
+(add-hook 'css-mode-hook 'prettier-js-mode)
 
 ;; HTML
 ;; vscode-html-languageserver required
 ;; $> npm install -g vscode-html-languageserver-bin
-(add-hook 'html-mode #'lsp)
+(add-hook 'html-mode-hook #'lsp)
 
 ;; Javascript
 ;; typescript-language-server required
 ;; $> npm install -g typescript-language-server
 (add-hook 'js-mode-hook #'lsp)
+(setq js-indent-level 2)
+
+(add-hook 'js-mode-hook #'prettier-js-mode)
+(add-hook 'js2-mode-hook #'prettier-js-mode)
+
 
 ;; LaTeX
 ;; auctex is required
@@ -60,6 +72,14 @@
 (use-package auctex
   :defer t
   :hook (LaTeX-mode . flymake)
+;; Python
+;; python-language-server must be installed
+;; $> pacman -S python-language-server
+(load "~/.emacs.d/config/packages/lsp-python-ms/lsp-python-ms.el")
+(use-package lsp-python-ms
+  :after lsp-python-ms
+  :ensure nil
+  :hook (python-mode . lsp)
   :config
 
   ;; Enables parsing
@@ -79,17 +99,16 @@
 ;; Python
 ;; python-language-server must be installed
 ;; (load "~/.emacs.d/config/packages/lsp-python-ms/lsp-python-ms.el")
-(add-hook 'python-mode #'lsp)
-(lsp-define-stdio-client lsp-python "python"
-                         #'projectile-project-root
-                         '("pyls")
-                         )
-
-(add-hook 'python-mode-hook
-          (lambda ()
-            (lsp-python-enable)
-            )
-          )
+;; (use-package ls-python-ms
+;;   :ensure nil
+;;   :hook (python-mode . lsp)
+;;   :config
+;;   (setq lsp-python-ms-executable
+;;         "/usr/bin/pyls"
+;;         )
+;;   )
+(add-hook 'python-mode-hook #'lsp)
+(setq python-indent-offset 4)
 
 (use-package pyvenv
   :defer t)
@@ -112,4 +131,5 @@
               (set-face-background 'mmm-default-submode-face nil)
               )
             )
+  (add-hook 'vue-mode-hook #'prettier-js-mode)
   )
