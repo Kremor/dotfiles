@@ -1,0 +1,42 @@
+URxvt*font: xft:Source Code Pro Medium:pixelsize=14:antialias=true:hinting=true
+URxvt*boldFont: xft:Source Code Pro Black:pixelsize=14:antialias=true:hinting=true
+URxvt*italicFont: xft:Source Code Pro Medium Italics:pixelsize=14:antialias=true:hinting=true
+URxvt*boldItalicFont: xft:Source Code Pro Black Italic:pixelsize=14:antialias=true:hinting=true
+
+URxvt*scrollBar: false
+! URxvt*depth: 32
+! URxvt*transparent: true
+! URxvt*shading: 30
+! URxvt*inheritPixmap: true
+
+! Colors
+
+! special
+*background:   #33393B
+*foreground:   #eff0eb
+*cursorColor:  #57c7ff
+
+!black
+*color0:      #33303b
+*color8:      #4f4b58
+!red
+*color1:      #FF9BB8
+*color9:      #FF9BB8
+!greend
+*color2:      #00E3FF
+*color10:     #00E3FF
+!yellow
+*color3:      #f3f99d
+*color11:     #f3f99d
+!blue
+*color4:      #9aedfe
+*color12:      #FF9BB8
+!magenta
+*color5:      #ff6ac1
+*color13:     #ff6ac1
+!cyan
+*color6:      #FF9BB8
+*color14:     #9aedfe
+!white
+*color7:      #FFFFFF
+*color15:     #FFFFFF

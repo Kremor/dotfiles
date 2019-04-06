@@ -70,42 +70,71 @@ do
 end
 -- }}}
 
+-- Colors
+
+local background = "#33393b"
+local foreground = "#eff0eb"
+
+local black = "#33393B"
+local black_light = "#4f4b58"
+local white = "#eff0eb"
+local white_light = "#ffffff"
+local red = "#ff697b"
+local red_light = "#ef9a9a"
+-- local yellow
+local yellow_light = "#fff9c4"
+-- local green
+-- local green_light
+-- local cyan
+-- local cyan_light
+local blue = "#00b8d4"
+local blue_light = "#4dd0e1"
+-- local magenta
+-- local magenta_light
+
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(
    gears.filesystem.get_themes_dir().."default/theme.lua"
 )
 
-local icons_path = os.getenv("HOME").."/.config/awesome/icons/"
+icons_path = os.getenv("HOME").."/.config/awesome/icons/"
 
 -- Overrides default theme
-beautiful.bg_normal = "#ffe2e2"
-beautiful.bg_focus = "#ffbcbc6"
-beautiful.bg_systray = "#ffe2e2"
-beautiful.bg_urgent = "#ff697b"
+beautiful.bg_normal = black_light
+beautiful.bg_focus = black_light
+beautiful.bg_systray = black_light
+beautiful.bg_urgent = black_light
 
-beautiful.fg_normal = "#8785a2"
-beautiful.fg_focus = "#8785a2"
+beautiful.fg_normal = foreground
+beautiful.fg_focus = foreground
 
 beautiful.useless_gap = 3
 beautiful.border_width = 2
 
-beautiful.titlebar_bg = beautiful.bg_normal
-beautiful.titlebar_fg_normal = beautiful.fg_normal
-beautiful.titlebar_fg_focus = beautiful.fg_normal
+beautiful.titlebar_bg = background
+beautiful.titlebar_fg_normal = background
+beautiful.titlebar_fg_focus = foreground
 
 beautiful.awesome_icon = icons_path.."icons8-moon-phase-64.png"
 
 beautiful.titlebar_close_button_normal = icons_path.."close-icon-normal.svg"
-beautiful.titlebar_close_button_focus = icons_path.."close-icon-focus.svg"
+beautiful.titlebar_close_button_focus = icons_path.."circle-outline-red.svg"
+
+-- Background
+beautiful.wallpaper = "/home/kremor/.config/awesome/background.png"
 
 -- Hover
 beautiful.titlebar_close_button_normal_hover = icons_path.."close-icon.svg"
 beautiful.titlebar_close_button_focus_hover = icons_path.."close-icon.svg"
 
+beautiful.taglist_square_size = nil
+beautiful.taglist_squares_sel = nil
+beautiful.taglist_squares_unsel = nil
+
 
 -- This is used later as the default terminal and editor to run.
-terminal = "sakura"
+terminal = "urxvtc"
 editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -166,7 +195,7 @@ mymainmenu = awful.menu({
       items = {
          { "awesome", myawesomemenu, beautiful.awesome_icon },
          { "open terminal", terminal },
-         { "open emacs", "emacs" },
+         { "open emacs", "emacsclient -c -a=''" },
          { "open firefox", "firefox" },
       }
 })
@@ -247,14 +276,28 @@ awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
 
+    -- local screen_count = num_screens()
+    -- local tags_per_screen = 10 // screen_count
+
+    -- for i = 1,  do
+    --    local ii = (s.index - 1) * screen_count + i
+    --    awful.tag.add(
+    --       string.format("tag %d", ii),
+    --       {
+    --          icon = icons_path.."circle-outline-white.svg",
+    --          layout = awful.layout.layouts[1],
+    --          gap_single_client = true,
+    --          gap = 3,
+    --          sceen = s,
+    --          selected = false
+    --       }
+    --    )
+    -- end
+
     -- Each screen has its own tag table.
     tags = {}
     for i = 1, 5 do
-       if s.index == 1 then
-          tags[i] = tostring(i)
-       else
-          tags[i] = tostring(i+5)
-       end
+       tags[i] = ""
     end
     awful.tag(
        tags,
@@ -266,6 +309,7 @@ awful.screen.connect_for_each_screen(function(s)
        local tag = s.tags[i]
        tag.gap = 3
        tag.gap_single_client = true
+       tag.icon = icons_path.."circle-outline-white.svg"
     end
 
     -- Create a promptbox for each screen
@@ -568,6 +612,10 @@ clientkeys = gears.table.join(
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
+local screen_count = num_screens()
+local tags_per_screen = 10 // screen_count
+local total_tags = tags_per_screen * screen_count
+
 for i = 1, 10 do
    local index = i
    local screen_index = i // 6 + 1
@@ -706,14 +754,14 @@ tag.connect_signal(
    "property::useless_gap*",
    function (t)
       t.gap_single_client = true
-      count = 0
+      local count = 0
       for _ in pairs(t:clients()) do
          count = count + 1
       end
       if count == 1 then
-         t.gap = 10
+         return 10
       else
-         t.gap = 3
+         return 3
       end
    end
 )
@@ -754,6 +802,39 @@ client.connect_signal(
       and not c.size_hints.program_position then
          -- Prevent clients from being unreachable after screen count changes.
          awful.placement.no_offscreen(c)
+      end
+
+      -- Icon
+      local client_count = 0
+      local t = c.first_tag
+
+      for _ in pairs(t:clients()) do
+         client_count = client_count + 1
+      end
+
+      if client_count > 0 then
+         t.icon = icons_path.."circle-blue-light.svg"
+      else
+         t.icon = icons_path.."close-icon-focus.svg"
+      end
+   end
+)
+
+client.connect_signal(
+   "unmanage",
+   function (c)
+      local client_count = 0
+
+      local t = awful.screen.focused().selected_tag
+
+      for _ in pairs(t:clients()) do
+         client_count = client_count + 1
+      end
+
+      if client_count > 0 then
+         t.icon = icons_path.."circle-blue-light.svg"
+      else
+         t.icon = icons_path.."close-icon-focus.svg"
       end
    end
 )
@@ -811,14 +892,52 @@ end)
 client.connect_signal(
    "focus",
    function(c)
-      c.border_color = beautiful.bg_normal
+      c.border_color = blue_light
    end
 )
 
 client.connect_signal(
    "unfocus",
    function(c)
-      c.border_color = "#21181c"
+      c.border_color = black
+   end
+)
+
+tag.connect_signal(
+   "property::selected",
+   function (t)
+      local client_count = 0
+
+      for _ in pairs(t:clients()) do
+         client_count = client_count + 1
+      end
+
+      if t.selected then
+         if client_count > 0 then
+            t.icon = icons_path.."circle-blue-light.svg"
+         else
+            t.icon = icons_path.."close-icon-focus.svg"
+         end
+      else
+         if client_count > 0 then
+            t.icon = icons_path.."circle-outline-blue-light.svg"
+         else
+            t.icon = icons_path.."circle-outline-white.svg"
+         end
+      end
+   end
+)
+
+client.connect_signal(
+   "property::urgent",
+   function (c)
+      for _, t in pairs(c:tags()) do
+         if t.selected then
+            t.icon = icons_path.."close-icon.svg"
+         else
+            t.icon = icons_path.."circle-outline-red.svg"
+         end
+      end
    end
 )
 -- }}}
