@@ -17,3 +17,35 @@
    $> dot config --local status.showUntrackedFiles no
    #+END_SRC
 5. You can now use the repository as normal, just use ~dot~ instead of ~git~.
+
+* Requirements
+
++ compton
++ pa-applet
++ nm-applet
++ numlockx
++ redshift
++ setxkbmap
++ Souce Code Pro
++ syncthing
++ syncthing-gtk
++ thunar
++ URxvt
++ xfce
+  - xfsettingsd
+  - xfce4-power-manager
++ xmodmap
+
+* Setup
+
+** Emacs
+
+Enable daemons:
+
+#+BEGIN_SRC basg
+$> systemctl --user enable emacs.service
+$> systemctl --user start emacs.service
+
+$> systemctl --user enable syncthing.service
+$> systemctl --user start syncthing.service
+#+END_SRC

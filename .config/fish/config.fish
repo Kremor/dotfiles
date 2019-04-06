@@ -10,7 +10,7 @@ alias dot-remove='dot rm --cached'
 
 
 # Loads terminal colors using wal
-set wal_path (whereis wal)
-if not test "$wal-path" = ""
-    wal -n -R -q
-end
+# set wal_path (whereis wal)
+# if not test "$wal-path" = ""
+#     wal -n -R -q
+# end

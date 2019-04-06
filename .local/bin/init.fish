@@ -3,35 +3,36 @@
 function run
     # Checks if a program is already running on the background.
     # If not executes it with the included parameters.
-    set pid (pidof $argv[1])
+    set command $argv[1]
+    set exists (which $command ^&1 | grep -E (echo 'no' $command))
 
-    if test "$pid" = ""
-        $argv &
+    if test "$exists" = ""
+        set pid (pidof $command)
+        if test "$pid" = ""
+            $argv & disown
+        else
+            echo $command is already running
+        end
     else
-        echo $argv[1] is already running
+        echo "unknow command:" $command
     end
 end
 
-# compton
-run compton --vsync opengl
-
-# redshift
-run redshift
-
-# Network manager
+run blueman-applet
+run compton --config ~/.config/compton/compton.conf
 run nm-applet
-
-# Thunar
-run thunar --daemon
-
-# Pamac
 run pamac-tray
-
-# XFCE Settings Daemon
+run pa-applet
+run redshift
+run syncthing-gtk  -m
+run thunar --daemon
+run xfce4-power-manager
 run xfsettingsd
+run urxvtd
 
+# Remaps keyboard
 numlockx on
-feh --randomize --bg-tile $HOME/.background.png
+setxkbmap
 
 # Changes key configuration
 xmodmap $HOME/.config/xmodmap/xmodmap.conf
