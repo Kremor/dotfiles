@@ -1,0 +1,5 @@
+rofi.modi: combi
+rofi.combi-modi: window,drun
+rofi.show-icons: true
+rofi.hide-scrollbar: true
+rofi.theme: Pop-Dark

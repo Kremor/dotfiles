@@ -343,6 +343,8 @@ awful.screen.connect_for_each_screen(function(s)
     s.mywibox = awful.wibar({ position = "top", screen = s })
 
     -- Add widgets to the wibox
+    systray = wibox.widget.systray()
+    systray:set_base_size(20)
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
@@ -355,7 +357,7 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
-            wibox.widget.systray(),
+            systray,
             mytextclock,
             s.mylayoutbox,
         }
@@ -482,7 +484,7 @@ globalkeys = gears.table.join(
        "space",
        function ()
           awful.spawn(
-             "rofi -modi combi -show combi -combi-modi window,drun -show-icons"
+             "rofi -show combi"
           )
        end,
        { description = "open rofi", group = "launcher" }
