@@ -21,9 +21,11 @@
 * Requirements
 
 + compton
-+ pa-applet
 + nm-applet
 + numlockx
++ Paper Icon Theme
++ pa-applet
++ Pop GTK Theme
 + redshift
 + setxkbmap
 + Souce Code Pro
